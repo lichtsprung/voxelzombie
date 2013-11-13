@@ -41,8 +41,8 @@ class VoxelZombieMain extends Game {
 
   var boxInstances = Vector.empty[ModelInstance]
 
-  val sizeX = 80
-  val sizeY = 70
+  val sizeX = 128
+  val sizeY = 128
   val sizeZ = 128
 
   val voxelEngine = new VoxelEngine(sizeX, sizeY, sizeZ)
@@ -57,8 +57,8 @@ class VoxelZombieMain extends Game {
     environment = Some(new Environment())
 
     for (cam ← camera) {
-      cam.position.set(-0.08835737f, 1.8501015f, -9.186637f)
-      cam.direction.set(1.7695129E-8f, -0.23853303f, 0.97113526f)
+      cam.position.set(-24.083656f, 16.624105f, -4.416327f)
+      cam.direction.set(0.6534194f, -0.7569949f, 0.0019258386f)
       cam.near = 0.1f
       cam.far = 500f
       cam.update()
@@ -103,7 +103,6 @@ class VoxelZombieMain extends Game {
 
   override def render() = {
     handleInput()
-    voxelEngine.updateVolumePosition(posX, posY, posZ)
 
     Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT)

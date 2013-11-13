@@ -33,6 +33,7 @@ object Settings {
     scalacOptions ++= Seq("-Xlint", "-unchecked", "-deprecation", "-feature"),
     parallelExecution in Test := false,
     unmanagedBase <<= baseDirectory(_/"libs"),
+    unmanagedResourceDirectories in Compile += file("common/assets"),
     resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
     libraryDependencies ++= Seq(
       "com.badlogicgames.gdx" % "gdx" % "1.0-SNAPSHOT"
