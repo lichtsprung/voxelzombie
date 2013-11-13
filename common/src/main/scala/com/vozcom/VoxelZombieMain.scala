@@ -79,9 +79,9 @@ class VoxelZombieMain extends Game {
 
     val modelBuilder = new ModelBuilder()
 
-    ModelInstances.register("green-box", modelBuilder.createBox(0.1f, 0.1f, 0.1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position | Usage.Normal))
-    ModelInstances.register("dark-gray-box", modelBuilder.createBox(0.1f, 0.1f, 0.1f, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)), Usage.Position | Usage.Normal))
-    ModelInstances.register("light-gray-box", modelBuilder.createBox(0.1f, 0.1f, 0.1f, new Material(ColorAttribute.createDiffuse(Color.LIGHT_GRAY)), Usage.Position | Usage.Normal))
+    ModelInstances.register("green-box", modelBuilder.createBox(0.2f, 0.2f, 0.2f, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position | Usage.Normal))
+    ModelInstances.register("dark-gray-box", modelBuilder.createBox(0.2f, 0.2f, 0.2f, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)), Usage.Position | Usage.Normal))
+    ModelInstances.register("light-gray-box", modelBuilder.createBox(0.2f, 0.2f, 0.2f, new Material(ColorAttribute.createDiffuse(Color.LIGHT_GRAY)), Usage.Position | Usage.Normal))
 
   }
 
@@ -120,7 +120,7 @@ class VoxelZombieMain extends Game {
         e ← environment
         box ← ModelInstances("green-box")
       } {
-        box.transform.setToTranslation(voxel.x * 0.105f - sizeX / 2 * 0.105f, voxel.y * 0.105f, voxel.z * 0.105f - sizeZ / 2 * 0.105f)
+        box.transform.setToTranslation(voxel.x * 0.205f - sizeX / 2 * 0.205f, voxel.y * 0.205f, voxel.z * 0.205f - sizeZ / 2 * 0.205f)
         mb.render(box, e)
       }
       mb.end()

@@ -43,17 +43,17 @@ class VoxelEngine(sizeX: Int, sizeY: Int, sizeZ: Int) {
     viewVolume = updateVolume()
   }
 
-  private def updateVolume(): Vector[Voxel] = {
-    var v = Vector.empty[Voxel]
-    //    for (x ← posX to (posX + sizeX)) {
-    //      for (z ← posZ to (posZ + sizeZ)) {
-    //        v = v :+ Voxel(x - posX, f(x, z), z - posZ)
-    //      }
-    //    }
+  private def updateVolume(): Set[Voxel] = {
+    def createNeighbours(voxel: Voxel, count: Int): Set[Voxel] = {
+      if (count == 0) {
+        return Set(voxel)
+      }
+      val s = Set(Voxel(voxel.x + 1, voxel.y, voxel.z), Voxel(voxel.x - 1, voxel.y, voxel.z), Voxel(voxel.x, voxel.y, voxel.z + 1), Voxel(voxel.x, voxel.y, voxel.z - 1))
 
-    //    osm.nodes.values map { node ⇒
-    //      v = v :+ Voxel(math.round(node.lat / sx), 1, math.round(node.lon / sz))
-    //    }
+      s ++ createNeighbours(s.toList(0), count - 1) ++ createNeighbours(s.toList(1), count - 1) ++ createNeighbours(s.toList(2), count - 1) ++ createNeighbours(s.toList(3), count - 1)
+    }
+
+    var v = Set.empty[Voxel]
 
     osm.ways.values map {
       way ⇒
@@ -61,29 +61,26 @@ class VoxelEngine(sizeX: Int, sizeY: Int, sizeZ: Int) {
 
           val start = osm.nodes(way.nodes(i))
           val end = osm.nodes(way.nodes(i + 1))
-          println(s"start: $start")
-          println(s"end: $end\n")
+
           val it = Bresenham.bresenham(
             math.round(start.lat / sx),
             math.round(start.lon / sz),
             math.round(end.lat / sx),
             math.round(end.lon / sz))
+
           it.foreach(i ⇒ {
-            v = v :+ Voxel(i.x, 1, i.y)
+            val vo = Voxel(i.x, 1, i.y)
+            v = v + vo
             if (way.tags.contains(OSMParser.Tag("building", "yes"))) {
-              for (n ← 2 until 50) {
-                v = v :+ Voxel(i.x, n, i.y)
+              for (n ← 2 until 25) {
+                v = v + Voxel(i.x, n, i.y)
               }
             } else {
-              v = v :+ Voxel(i.x + 1, 1, i.y)
-              v = v :+ Voxel(i.x - 1, 1, i.y)
-              v = v :+ Voxel(i.x, 1, i.y + 1)
-              v = v :+ Voxel(i.x, 1, i.y - 1)
+              v = v ++ createNeighbours(vo, 8)
             }
           })
         }
     }
-
     v
   }
 
